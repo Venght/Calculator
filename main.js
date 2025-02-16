@@ -1,11 +1,33 @@
-let num1 = parseInt(prompt("Enter the first number?"));
-let num2 = parseInt(prompt("Enter the second number?"));
+//let num1 = parseInt(prompt("Enter the first number?"));
+//let num2 = parseInt(prompt("Enter the second number?"));
 
-const button = document.querySelectorAll(".btn");
+const buttons = document.querySelectorAll(".btn");
+const operators = document.querySelector(".operator");
+const display = document.getElementById("display");
 
 let firstNumber = "";
 let operator = "";
 let secondNumber = "";
+const displayElement = document.querySelector("#display");
+
+const [num1, num2] = getNumber();
+
+buttons.forEach(button => {
+    button.addEventListener('click', function() {
+        appendNumber(displayElement.textContent);
+    })
+})
+
+operators.forEach(operator => {
+    operator.addEventListener('click', function() {
+        appendNumber(displayElement.textContent);
+    })
+})
+
+function appendNumber(value) {
+    return display.textContent += value;
+}
+
 
 function operate(operator, a, b) {
 
@@ -46,7 +68,7 @@ function divide(a,b) {
 function getNumber() {
     let num1 = parseInt(prompt("Enter the first number?"));
     let num2 = parseInt(prompt("Enter the second number?"));
-    return num1, num2;
+    return [num1, num2];
 }
 
 
