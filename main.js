@@ -2,7 +2,7 @@
 //let num2 = parseInt(prompt("Enter the second number?"));
 
 const buttons = document.querySelectorAll(".btn");
-const operators = document.querySelector(".operator");
+const operators = document.querySelectorAll(".operator");
 const display = document.getElementById("display");
 
 let firstNumber = "";
@@ -11,16 +11,15 @@ let secondNumber = "";
 const displayElement = document.querySelector("#display");
 
 const [num1, num2] = getNumber();
-
 buttons.forEach(button => {
     button.addEventListener('click', function() {
-        appendNumber(displayElement.textContent);
+        display.textContent+= this.getAttribute("data-value");
     })
 })
 
 operators.forEach(operator => {
     operator.addEventListener('click', function() {
-        appendNumber(displayElement.textContent);
+        display.textContent += this.getAttribute("data-value")
     })
 })
 
