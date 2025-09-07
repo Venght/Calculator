@@ -1,0 +1,84 @@
+body{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100vw;
+    height: 200vh;
+}
+
+.btn {
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+    margin: 15px;  
+    font-size: 50px;
+}
+
+.btn.number {
+    border: 2px solid #ffbb01;
+    border-radius: 20%;
+}
+.btn.number:hover {
+    background-color: rgb(253, 186, 60)
+}
+.btn.operator{
+    border: 2px solid blue;
+    border-radius: 20%;
+}
+.btn.operator:hover {
+    background-color: #d0e1f9;
+}
+
+.btn.clear {
+    border: 2px solid #ffbb01;
+    border-radius: 20%;
+}
+.btn.clear:hover {
+    background-color: #ffdd7f;
+}
+
+.btn.equals {
+    border: 2px solid green;
+    border-radius: 20%;
+}
+
+.btn.equals:hover {
+    background-color: #b0e57c;
+}
+
+.btn.decimal {
+    border: 2px solid black;
+    border-radius: 20%;
+}
+
+.btn.decimal:hover {
+    background-color: #d0d0d0;
+}
+
+.first-rows {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.display{
+    border: 1px solid #ffbb01;
+    width: 310px;
+    height: 100px;
+    margin: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    align-items: flex-end;
+}
+
+.previous {
+    font-size: 20px;
+}
+
+.current {
+    font-size: 30px;
+}
+
