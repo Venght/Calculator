@@ -1,0 +1,94 @@
+const previousDisplay = document.querySelector('.previous');
+const currentDisplay = document.querySelector('.current');
+const numberButtons = document.querySelectorAll('.number');
+const operatorButtons = document.querySelectorAll('.operator');
+const clearButton = document.querySelector('.clear');
+const equalsButton = document.querySelector('.equals');
+const decimalButton = document.querySelector('.decimal');
+
+let currentNumber = "";
+let previousNumber = "";
+let operator = null;
+
+// ✅ Add number when clicked
+numberButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (currentNumber.length >= 12) return; // limit digits
+    currentNumber += button.textContent;
+    currentDisplay.textContent = currentNumber;
+  });
+});
+
+// ✅ Add decimal (only once)
+decimalButton.addEventListener('click', () => {
+  if (!currentNumber.includes('.')) {
+    if (currentNumber === "") {
+      currentNumber = "0."; // start with "0."
+    } else {
+      currentNumber += ".";
+    }
+    currentDisplay.textContent = currentNumber;
+  }
+});
+
+// ✅ Operator logic
+operatorButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    if (currentNumber === "") return; // nothing to calculate
+    if (previousNumber !== "") {
+      calculate(); // chain calculations
+    }
+    operator = button.textContent;
+    previousNumber = currentNumber;
+    previousDisplay.textContent = previousNumber + " " + operator;
+    currentNumber = "";
+    currentDisplay.textContent = "";
+  });
+});
+
+// ✅ Equals button
+equalsButton.addEventListener('click', () => {
+  if (previousNumber === "" || currentNumber === "" || !operator) return;
+  calculate();
+  operator = null; // reset operator after calculation
+});
+
+// ✅ Clear button
+clearButton.addEventListener('click', () => {
+  currentNumber = "";
+  previousNumber = "";
+  operator = null;
+  currentDisplay.textContent = "";
+  previousDisplay.textContent = "";
+});
+
+// ✅ Core calculation function
+function calculate() {
+  let result;
+  const prev = parseFloat(previousNumber);
+  const curr = parseFloat(currentNumber);
+
+  if (isNaN(prev) || isNaN(curr)) return;
+
+  switch (operator) {
+    case '+':
+      result = prev + curr;
+      break;
+    case '-':
+      result = prev - curr;
+      break;
+    case '*':
+      result = prev * curr;
+      break;
+    case '/':
+      result = curr === 0 ? "Error" : prev / curr;
+      break;
+    default:
+      return;
+  }
+
+  currentNumber = result.toString();
+  currentDisplay.textContent = currentNumber;
+  previousDisplay.textContent = "";
+  previousNumber = "";
+}

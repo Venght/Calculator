@@ -1,75 +1,103 @@
-const buttons = document.querySelectorAll(".btn");
-const operators = document.querySelectorAll(".operator");
-const display = document.getElementById("display");
-//const [num1, num2] = getNumber();
+const numbers = document.querySelectorAll('.number');
+const operators = document.querySelectorAll('.operator');
+const equals = document.querySelector('.equals');
+const clear = document.querySelector('.clear');
+const decimals = document.querySelector('.decimal');
 
-let firstNumber = "";
-let operator = "";
-let secondNumber = "";
-const displayElement = document.querySelector("#display");
+//get display elements
+const previousDisplay = document.querySelector('.previous');
+const currentDisplay = document.querySelector('.current');
 
-buttons.forEach(button => {
-    button.addEventListener('click', function() {
-        display.value += this.getAttribute("data-value");
+let previous = "";
+let current = "";
+let operator = null;
+
+numbers.forEach(button => {
+    button.addEventListener('click', () => {
+        if(current.length >= 10) return;
+        current += button.innerText;
+        currentDisplay.innerText = current;
+    })
+});
+
+operators.forEach(button => {
+    button.addEventListener('click', () => {
+        if(current === "") return;
+        if(previous !== "") {
+            calculate();
+        }
+
+        operator = button.textContent;
+        previous = current;
+        previousDisplay.textContent = previous + " " + operator;
+        current = "";
+        currentDisplay.textContent = current;
+        
     })
 })
 
-operators.forEach(operator => {
-    operator.addEventListener('click', function() {
-        display.value += this.getAttribute("data-value")
+
+    clear.addEventListener ('click', () => {
+        previous = "";
+        current = "";
+        operator = null;
+        previousDisplay.textContent = "";
+        currentDisplay.textContent = "";
     })
+
+decimals.addEventListener('click', () => {
+    if(!current.includes('.')) {
+        if(current === "") {
+            current = "0.";
+        } else {
+            current += '.';
+        }
+        currentDisplay.textContent = current;
+    }
 })
 
-function appendNumber(value) {
-    return display.value += value;
-}
 
+equals.addEventListener('click', () => {
+    if(previous === "" || current === "" || !operator) return;
+    calculate();
+    operator = null;
+})
 
-function operate(operator, a, b) {
+function calculate() {
 
-    if(operator == "+") {
-        return a + b;
+    let result;
+    const prev = parseFloat(previous);
+    const curr = parseFloat(current);
+
+    if(isNaN(prev) || isNaN(curr)) return;
+
+    switch(operator) {
+        case '+':
+        result = prev + curr;
+        break;
+        case '-':
+        result = prev - curr;
+        break;
+        case '*':
+        result = prev * curr;
+        break;    
+        case '/':
+        if(curr === 0){
+            return;
+        } else {
+            result = prev / curr;
+            break;
+        }
+        default:
+        return;
     }
-    else if(operator == "-"){
-        return a - b;
-    }
-    else if(operator == "*"){
-        return a * b;
-    }
-    else if(operator == "/") {
-        return a / b;
-    }
-    else {
-        return null;
-    }
-}
 
-function add(a, b) {
- return a + b;
-}
+    current = result.toString();
+    currentDisplay.textContent = current;
+    previousDisplay.textContent = "";
+    previous = "";
 
-function subtract(a,b) {
-    return a - b;
-}
-
-function multiply(a,b) {
-    return a * b;
 }
 
 
-function divide(a,b) {
-    return a / b;
-}
 
-/*function getNumber() {
-    let num1 = parseInt(prompt("Enter the first number?"));
-    let num2 = parseInt(prompt("Enter the second number?"));
-    return [num1, num2];
-}*/
-
-
-
-console.log("Addition:", add(num1, num2));
-console.log("Subtraction:", subtract(num1, num2));
-console.log("Multiplication:", multiply(num1, num2));
-console.log("Division:", divide(num1, num2));
